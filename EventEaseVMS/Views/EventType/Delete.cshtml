@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model EventEaseVMS.Models.EventType
+
+@{
+    ViewData["Title"] = "Delete Event Type";
+}
+
+<h2>Delete Event Type</h2>
+<hr />
+
+<div class="alert alert-danger">
+    Are you sure you want to delete this event type?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Event Type</dt>
+    <dd class="col-sm-9">@Model.TypeName</dd>
+    <dt class="col-sm-3">Description</dt>
+    <dd class="col-sm-9">@Model.Description</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="EventTypeId" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

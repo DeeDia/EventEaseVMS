@@ -1,97 +1,118 @@
-﻿
-// Controllers for the VenueController.cs
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using EventEaseVMS.Data;
 using EventEaseVMS.Models;
 using Microsoft.EntityFrameworkCore;
 
-
-
 namespace EventEaseVMS.Controllers
 {
-    public class VenueController : Controller //inherit controller
+    public class VenueController : Controller
     {
         private readonly EventEaseDbContext _context;
-        //DbContext is injected automatically by ASP.NET
+
         public VenueController(EventEaseDbContext context)
         {
             _context = context;
         }
 
-        //lIST OF ALL VENUES
+        // LIST ALL VENUES
         public async Task<IActionResult> Index()
         {
-            var vvenus = await _context.Venues.ToListAsync();
-            return View(vvenus);// passes list to Views/Venue/Index.cshtml
+            var venues = await _context.Venues.ToListAsync();
+            return View(venues);
         }
 
-        public IActionResult create()
+        // SHOW CREATE PAGE
+        public IActionResult Create()
         {
-            // Send the SA venues dropdown list to the view
             ViewBag.VenueNames = Venue.SouthAfricanVenues;
             return View();
         }
 
-        //To save each new venue to te database
+        // SAVE NEW VENUE
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Venue venue)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(venue);
+                _context.Venues.Add(venue);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            // If validation fails, repopulate the dropdown before returning the view
+
             ViewBag.VenueNames = Venue.SouthAfricanVenues;
             return View(venue);
         }
 
-        public async Task<IActionResult> Edit(int id) //shows edit form pre-filled
+        // SHOW EDIT PAGE
+        public async Task<IActionResult> Edit(int id)
         {
             var venue = await _context.Venues.FindAsync(id);
-            if (venue == null) return NotFound();
 
-            // Repopulate dropdown for edit form
+            if (venue == null)
+                return NotFound();
+
             ViewBag.VenueNames = Venue.SouthAfricanVenues;
+
             return View(venue);
         }
 
+        // UPDATE VENUE
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Venue venue)
         {
+            if (id != venue.VenueId)
+                return NotFound();
+
             if (ModelState.IsValid)
             {
-                _context.Update(venue);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Update(venue);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Venues.Any(v => v.VenueId == id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewBag.VenueNames = Venue.SouthAfricanVenues;
+
             return View(venue);
         }
 
-        //delete confirmation page
+        // DELETE CONFIRMATION PAGE
         public async Task<IActionResult> Delete(int id)
         {
-            var venue = await _context.Venues.FindAsync(id);
-            if (venue == null) return NotFound();
+            var venue = await _context.Venues
+                .FirstOrDefaultAsync(v => v.VenueId == id);
+
+            if (venue == null)
+                return NotFound();
+
             return View(venue);
         }
 
-        //now the delet confirmation 
+        // DELETE VENUE
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var venue = await _context.Venues.FindAsync(id);
+
             if (venue != null)
             {
                 _context.Venues.Remove(venue);
+                await _context.SaveChangesAsync();
             }
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }

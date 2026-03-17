@@ -1,7 +1,7 @@
+using EventEaseVMS.Data;
 using EventEaseVMS.Models;
-using EventaseVMS.Data;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace EventEaseVMS.Controllers
@@ -9,32 +9,42 @@ namespace EventEaseVMS.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly EventEaseDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, EventEaseDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        // DASHBOARD
+        public async Task<IActionResult> Index()
         {
-            // Stats for the dashboard
-            ViewBag.TotalVenues = await _context.Venues.CountAsync(v => v.IsActive);
-            ViewBag.TotalBookings = await _context.Bookings.CountAsync();
-            ViewBag.PendingBookings = await _context.Bookings.CountAsync(b => b.Status == BookingStatus.Pending);
-            ViewBag.ConfirmedBookings = await _context.Bookings.CountAsync(b => b.Status == BookingStatus.Confirmed);
+            // Stats for dashboard
+            ViewBag.TotalVenues = await _context.Venues
+                .CountAsync(v => v.IsActive);
 
-            // Upcoming bookings — next 5
+            ViewBag.TotalBookings = await _context.Bookings
+                .CountAsync();
+
+            ViewBag.PendingBookings = await _context.Bookings
+                .CountAsync(b => b.Status == BookingStatus.Pending);
+
+            ViewBag.ConfirmedBookings = await _context.Bookings
+                .CountAsync(b => b.Status == BookingStatus.Confirmed);
+
+            // Upcoming bookings
             ViewBag.UpcomingBookings = await _context.Bookings
                 .Include(b => b.Venue)
                 .Include(b => b.EventType)
-                .Where(b => b.EventDate >= DateTime.Today && b.Status != BookingStatus.Cancelled)
+                .Where(b => b.EventDate >= DateTime.Today &&
+                            b.Status != BookingStatus.Cancelled)
                 .OrderBy(b => b.EventDate)
                 .Take(5)
                 .ToListAsync();
 
             return View();
         }
-
 
         public IActionResult Privacy()
         {
@@ -44,7 +54,10 @@ namespace EventEaseVMS.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
     }
 }

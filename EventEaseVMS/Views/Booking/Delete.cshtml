@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model EventEaseVMS.Models.Booking
+@using EventEaseVMS.Models
+
+@{
+    ViewData["Title"] = "Cancel Booking";
+}
+
+<h2>Cancel Booking</h2>
+<hr />
+
+<div class="alert alert-danger">
+    Are you sure you want to cancel this booking? This cannot be undone.
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Customer</dt>
+    <dd class="col-sm-9">@Model.CustomerName</dd>
+
+    <dt class="col-sm-3">Venue</dt>
+    <dd class="col-sm-9">@Model.Venue?.VenueName</dd>
+
+    <dt class="col-sm-3">Event Date</dt>
+    <dd class="col-sm-9">@Model.EventDate.ToString("dd MMM yyyy")</dd>
+
+    <dt class="col-sm-3">Time</dt>
+    <dd class="col-sm-9">
+        @Model.StartTime.ToString(@"hh\:mm") – @Model.EndTime.ToString(@"hh\:mm")
+    </dd>
+
+    <dt class="col-sm-3">Event Type</dt>
+    <dd class="col-sm-9">@Model.EventType?.TypeName</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="BookingId" />
+    <button type="submit" class="btn btn-danger">Yes, Cancel Booking</button>
+    <a asp-action="Index" class="btn btn-secondary">Go Back</a>
+</form>

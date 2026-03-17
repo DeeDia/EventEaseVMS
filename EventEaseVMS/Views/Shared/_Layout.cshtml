@@ -3,47 +3,221 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EventEaseVMS</title>
+    <title>@ViewData["Title"] - Eventase VMS</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EventEaseVMS.styles.css" asp-append-version="true" />
+
+    <style>
+        /* ── Navbar ───────────────────────────────────────────── */
+        .navbar-brand span.brand-ease {
+            color: #2E75B6;
+        }
+
+        .navbar {
+            background-color: #1E3A5F !important;
+        }
+
+            .navbar .nav-link {
+                color: #cbd8e8 !important;
+                font-size: 0.92rem;
+                transition: color 0.2s;
+            }
+
+                .navbar .nav-link:hover,
+                .navbar .nav-link.active {
+                    color: #ffffff !important;
+                }
+
+        .navbar-brand {
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── Page body ────────────────────────────────────────── */
+        body {
+            background-color: #f4f6f9;
+        }
+
+        .main-content {
+            padding-top: 1.5rem;
+        }
+
+        /* ── Footer ───────────────────────────────────────────── */
+        footer {
+            background-color: #1E3A5F;
+            color: #a0b4c8 !important;
+            padding: 1rem 0;
+            margin-top: 3rem;
+        }
+
+            footer a {
+                color: #7aaadb;
+                text-decoration: none;
+            }
+
+                footer a:hover {
+                    color: #ffffff;
+                }
+
+        /* ── Dropdown menus ───────────────────────────────────── */
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 6px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #D6E4F0;
+            color: #1E3A5F;
+        }
+    </style>
 </head>
 <body>
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EventEaseVMS</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-sm navbar-dark">
+            <div class="container-fluid px-4">
+
+                {{!-- Brand / Logo --}}
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    Event<span class="brand-ease">ase</span>
+                    <small class="text-muted" style="font-size:0.65rem; font-weight:400;
+                           display:block; line-height:1; color:#7aaadb !important;">
+                        Venue Management System
+                    </small>
+                </a>
+
+                {{!-- Mobile toggle --}}
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                {{!-- Nav links --}}
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+
+                        {{!-- Dashboard --}}
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                🏠 Dashboard
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+                        {{!-- Bookings --}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                               href="#" role="button"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                📅 Bookings
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="Booking"
+                                       asp-action="Index">
+                                        View All Bookings
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="Booking"
+                                       asp-action="Create">
+                                        + New Booking
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
+
+                        {{!-- Venues --}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                               href="#" role="button"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                🏛️ Venues
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="Venue"
+                                       asp-action="Index">
+                                        View All Venues
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="Venue"
+                                       asp-action="Create">
+                                        + Add Venue
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        {{!-- Event Types --}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                               href="#" role="button"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                🎭 Event Types
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="EventType"
+                                       asp-action="Index">
+                                        View All Event Types
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="EventType"
+                                       asp-action="Create">
+                                        + Add Event Type
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
+
+                    {{!-- Right side -- specialist label --}}
+                    <span class="navbar-text" style="color: #7aaadb; font-size: 0.85rem;">
+                        👤 Booking Specialist Portal
+                    </span>
                 </div>
+
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container main-content">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - EventEaseVMS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer>
+        <div class="container d-flex justify-content-between align-items-center">
+            <span>&copy; 2026 Eventase Venue Management System</span>
+            <span style="font-size: 0.8rem;">Admin Platform — Booking Specialists Only</span>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
