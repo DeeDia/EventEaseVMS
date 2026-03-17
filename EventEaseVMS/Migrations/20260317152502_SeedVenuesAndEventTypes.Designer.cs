@@ -4,6 +4,7 @@ using EventEaseVMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventEaseVMS.Migrations
 {
     [DbContext(typeof(EventEaseDbContext))]
-    partial class EventEaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260317152502_SeedVenuesAndEventTypes")]
+    partial class SeedVenuesAndEventTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Eventase VMS</title>
+    <title>@ViewData["Title"] - EventEase VMS</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EventEaseVMS.styles.css" asp-append-version="true" />
@@ -81,16 +81,16 @@
         <nav class="navbar navbar-expand-sm navbar-dark">
             <div class="container-fluid px-4">
 
-                {{!-- Brand / Logo --}}
+                
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    Event<span class="brand-ease">ase</span>
+                    Event<span class="brand-ease">Ease</span>
                     <small class="text-muted" style="font-size:0.65rem; font-weight:400;
                            display:block; line-height:1; color:#7aaadb !important;">
                         Venue Management System
                     </small>
                 </a>
 
-                {{!-- Mobile toggle --}}
+                
                 <button class="navbar-toggler" type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#mainNavbar"
@@ -100,18 +100,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                {{!-- Nav links --}}
+                
                 <div class="collapse navbar-collapse" id="mainNavbar">
                     <ul class="navbar-nav me-auto mb-2 mb-sm-0">
 
-                        {{!-- Dashboard --}}
+                        
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Index">
                                 🏠 Dashboard
                             </a>
                         </li>
 
-                        {{!-- Bookings --}}
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle"
                                href="#" role="button"
@@ -137,7 +137,7 @@
                             </ul>
                         </li>
 
-                        {{!-- Venues --}}
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle"
                                href="#" role="button"
@@ -163,7 +163,7 @@
                             </ul>
                         </li>
 
-                        {{!-- Event Types --}}
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle"
                                href="#" role="button"
@@ -191,7 +191,7 @@
 
                     </ul>
 
-                    {{!-- Right side -- specialist label --}}
+                    
                     <span class="navbar-text" style="color: #7aaadb; font-size: 0.85rem;">
                         👤 Booking Specialist Portal
                     </span>

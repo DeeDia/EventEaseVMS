@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model EventEaseVMS.Models.Venue
+
+<h2>Edit Venue</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="VenueId" />
+
+    <div class="mb-3">
+        <label asp-for="VenueName" class="form-label"></label>
+
+        @* asp-for automatically pre-selects the current venue name *@
+        <select asp-for="VenueName"
+                asp-items="ViewBag.VenueNames"
+                class="form-select">
+            <option value="">-- Select a Venue --</option>
+        </select>
+
+        <span asp-validation-for="VenueName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Location" class="form-label"></label>
+        <input asp-for="Location" class="form-control" />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Capacity" class="form-label"></label>
+        <input asp-for="Capacity" class="form-control" type="number" />
+        <span asp-validation-for="Capacity" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageUrl" class="form-label"></label>
+        <input asp-for="ImageUrl" class="form-control" />
+    </div>
+
+    <div class="mb-3 form-check">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label"></label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Venue</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

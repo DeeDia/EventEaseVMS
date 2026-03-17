@@ -83,12 +83,12 @@
 
                                 <td>@booking.Venue?.VenueName</td>
 
-                                <td>@booking.EventType?.EventName</td>
+                                <td>@booking.EventType?.TypeName</td>
 
                                 <td>@booking.EventDate.ToString("dd MMM yyyy")</td>
 
                                 <td>
-                                    @if (booking.StatusCode == 1)
+                                    @if (booking.Status == BookingStatus.Confirmed)
                                     {
                                         <span class="badge bg-success">Confirmed</span>
                                     }
@@ -99,12 +99,9 @@
                                 </td>
 
                                 <td>
-                                    <a asp-controller="Booking"
-                                       asp-action="Details"
+                                    <a asp-controller="Booking" asp-action="Details"
                                        asp-route-id="@booking.BookingId"
-                                       class="btn btn-sm btn-outline-primary">
-                                        View
-                                    </a>
+                                       class="btn btn-sm btn-outline-primary">View</a>
                                 </td>
 
                             </tr>
