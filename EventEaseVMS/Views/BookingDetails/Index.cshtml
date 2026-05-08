@@ -1,0 +1,57 @@
+﻿@model IEnumerable<EventEaseVMS.Models.BookingDetailViewModel>
+@using EventEaseVMS.Models
+@{
+    ViewData["Title"] = "Booking Overview";
+}
+<div class="d-flex justify-content-between mb-3">
+    <h2>Booking Overview</h2>
+    <a asp-controller="Booking" asp-action="Create" class="btn btn-primary">+ New Booking</a>
+</div>
+@* Search bar — BookingID or Event Name *@
+<form asp-action="Index" method="get" class="row g-2 mb-4">
+    <div class="col-md-7">
+        <input type="text" name="search" value="@ViewBag.CurrentSearch"
+               class="form-control" placeholder="Search by Booking ID or Event Name..." />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a asp-action="Index" class="btn btn-outline-secondary ms-2">Clear</a>
+    </div>
+</form>
+<p class="text-muted small">Showing @Model.Count() result(s)</p>
+<table class="table table-striped table-hover align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Booking ID</th>
+            <th>Event Name</th>
+            <th>Venue</th>
+            <th>Location</th>
+            <th>Capacity</th>
+            <th>Event Date</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th>Venue Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><strong>#@item.BookingId</strong></td>
+                <td>@item.EventName</td>
+                <td>@item.VenueName</td>
+                <td>@item.VenueLocation</td>
+                <td>@item.VenueCapacity</td>
+                <td>@item.EventDate.ToString("dd MMM yyyy")</td>
+                <td>@item.BookingDate.ToString("dd MMM yyyy")</td>
+                <td>@* status badge here *@</td>
+                <td>
+                    @if (item.VenueImageUrl != null)
+                    {
+                        <img src="@item.VenueImageUrl" style="height:44px;" class="rounded" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

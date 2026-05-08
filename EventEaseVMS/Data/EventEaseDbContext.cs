@@ -14,6 +14,9 @@ namespace EventEaseVMS.Data
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<EventType> EventTypes { get; set; }
 
+        public DbSet<BookingDetailViewModel> BookingDetails { get; set; }
+
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -52,6 +55,10 @@ namespace EventEaseVMS.Data
             new EventType { EventTypeId = 6, TypeName = "Graduation" },
             new EventType { EventTypeId = 7, TypeName = "Baby Shower" }
         );
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<BookingDetailViewModel>()
+                .ToView("vw_BookingDetails")
+                .HasNoKey();
 
         }
     }

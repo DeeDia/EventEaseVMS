@@ -1,10 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventEaseVMS.Models
 {
     public class Venue
     {
+        [NotMapped]  // IFormFile is never stored in DB — only ImageUrl is
+        [Display(Name = "Venue Image")]
+        public IFormFile? ImageFile { get; set; }
+
+
+        // Keep existing ImageUrl — stores the Blob URL returned after upload
+        [Display(Name = "Image URL")]
+        [StringLength(500)]
+        public string? ImageUrl { get; set; }
+
+
         [Key]
         public int VenueId { get; set; }
 
@@ -20,11 +32,7 @@ namespace EventEaseVMS.Models
         [StringLength(500)]
         public string? Description { get; set; }
 
-        [Display(Name = "Image URL")]
-        [StringLength(500)]
-        public string? ImageUrl { get; set; }
-
-        [Display(Name = "Active")]
+       [Display(Name = "Active")]
         public bool IsActive { get; set; } = true;
 
         // Navigation property

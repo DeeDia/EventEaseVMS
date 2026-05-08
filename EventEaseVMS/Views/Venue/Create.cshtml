@@ -1,15 +1,17 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model EventEaseVMS.Models.Venue
+﻿@model EventEaseVMS.Models.Venue
 
 <h2>Add New Venue</h2>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+
+    <div asp-validation-summary="All"
+         class="alert alert-danger"
+         style="display:@(ViewContext.ModelState.IsValid ? "none" : "block")">
+    </div>
+
     <div class="mb-3">
         <label asp-for="VenueName" class="form-label"></label>
 
-        @* Dropdown instead of text input *@
         <select asp-for="VenueName"
                 asp-items="ViewBag.VenueNames"
                 class="form-select">
@@ -33,12 +35,17 @@
 
     <div class="mb-3">
         <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        <textarea asp-for="Description"
+                  class="form-control"
+                  rows="3"></textarea>
     </div>
 
     <div class="mb-3">
-        <label asp-for="ImageUrl" class="form-label"></label>
-        <input asp-for="ImageUrl" class="form-control" />
+        <label asp-for="ImageFile" class="form-label"></label>
+        <input asp-for="ImageFile"
+               type="file"
+               class="form-control"
+               accept="image/*" />
     </div>
 
     <div class="mb-3 form-check">
@@ -48,4 +55,11 @@
 
     <button type="submit" class="btn btn-primary">Save Venue</button>
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+
 </form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -8,10 +8,10 @@ namespace EventEaseVMS.Models
         public int BookingId { get; set; }
 
         // CUSTOMER DETAILS
-        [Required]
-        [Display(Name = "Customer Name")]
-        [StringLength(100)]
+        [Required(ErrorMessage = "Customer name is required.")]
+        [StringLength(150, ErrorMessage = "Name cannot exceed 150 characters.")]
         public string CustomerName { get; set; } = string.Empty;
+
 
         [Required]
         [EmailAddress]
@@ -23,8 +23,8 @@ namespace EventEaseVMS.Models
         public string? CustomerPhone { get; set; }
 
         // EVENT DETAILS
-        [Required]
-        [Display(Name = "Event Date")]
+        [Required(ErrorMessage = "Event date is required.")]
+        [DataType(DataType.Date)]
         public DateTime EventDate { get; set; }
 
         [Required]
@@ -50,9 +50,9 @@ namespace EventEaseVMS.Models
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         // FOREIGN KEYS
-        [Required]
-        [Display(Name = "Venue")]
+        [Required(ErrorMessage = "Please select a venue.")]
         public int VenueId { get; set; }
+
 
         [Required]
         [Display(Name = "Event Type")]

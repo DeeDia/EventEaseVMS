@@ -89,12 +89,14 @@ namespace EventEaseVMS.Controllers
                     b.EventDate == booking.EventDate &&
                     b.Status != BookingStatus.Cancelled &&
                     b.StartTime < booking.EndTime &&
-                    b.EndTime > booking.StartTime);
+                    b.EndTime > booking.StartTime && 
+                    b.BookingId > booking.BookingId);
 
                 if (conflict)
                 {
                     ModelState.AddModelError("",
-                        "This venue is already booked for the selected date and time.");
+                        "This venue is already booked for the selected date and time." +
+                        "Please choose a different time slot or venue.");
 
                     PopulateDropdowns(booking);
                     return View(booking);

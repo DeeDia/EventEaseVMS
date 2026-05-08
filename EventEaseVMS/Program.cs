@@ -1,5 +1,6 @@
 using EventEaseVMS.Data;
 using Microsoft.EntityFrameworkCore;
+using EventEaseVMS.EEVServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ builder.Services.AddControllersWithViews();
 //Registering DbContext
 builder.Services.AddDbContext<EventEaseDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<BlobStorageServices>();
 
 
 var app = builder.Build();
