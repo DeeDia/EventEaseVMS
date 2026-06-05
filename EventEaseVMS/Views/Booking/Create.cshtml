@@ -1,16 +1,4 @@
-﻿<div asp-validation-summary="All" class="alert alert-danger"
-     style="display:@(ViewContext.ModelState.IsValid ? "none" : "block")">
-</div>
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
-
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model EventEaseVMS.Models.Booking
+﻿@model EventEaseVMS.Models.Booking
 
 @{
     ViewData["Title"] = "New Booking";
@@ -23,7 +11,8 @@
     <div class="col-md-7">
         <form asp-action="Create" method="post">
             <div asp-validation-summary="All" class="alert alert-danger"
-                 style="display:@(ViewContext.ModelState.IsValid ? "none" : "block")"></div>
+                 style="display:@(ViewContext.ModelState.IsValid ? "none" : "block")">
+            </div>
 
             <h5 class="mb-3">Customer Details</h5>
 
