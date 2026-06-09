@@ -1,4 +1,5 @@
-﻿using EventEaseVMS.Data;
+﻿
+using EventEaseVMS.Data;
 using EventEaseVMS.EEVServices;
 using EventEaseVMS.Models;
 using Microsoft.AspNetCore.Mvc;
