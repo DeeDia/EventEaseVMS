@@ -35,6 +35,10 @@ namespace EventEaseVMS.Models
        [Display(Name = "Active")]
         public bool IsActive { get; set; } = true;
 
+        [Display(Name = "Available for Booking")]
+        public bool IsAvailable { get; set; } = true;
+
+
         // Navigation property
         public ICollection<Booking>? Bookings { get; set; }
 

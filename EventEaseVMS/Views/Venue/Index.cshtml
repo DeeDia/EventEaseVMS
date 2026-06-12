@@ -29,6 +29,20 @@
     </div>
 </form>
 
+
+<div class="col-md-3">
+    <div class="form-check mt-4">
+        <input type="checkbox" name="availableOnly" value="true"
+               class="form-check-input" id="availCheck"
+               @(ViewBag.AvailableOnly == true ? "checked" : "") />
+        <label class="form-check-label" for="availCheck">
+            Available venues only
+        </label>
+    </div>
+</div>
+
+
+
 <table class="table table-striped table-hover">
     <thead class="table-dark">
         <tr>

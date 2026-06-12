@@ -46,7 +46,65 @@ namespace EventEaseVMS.Data
             new Venue { VenueId = 10, VenueName = "CTICC", Location = "Cape Town", Capacity = 1200, IsActive = true }
         );
 
+            // Seed predefined EventType categories
             modelBuilder.Entity<EventType>().HasData(
+                new EventType
+                {
+                    EventTypeId = 1,
+                    TypeName = "Conference",
+                    Description = "Business conferences and professional summits"
+                },
+                new EventType
+                {
+                    EventTypeId = 2,
+                    TypeName = "Wedding",
+                    Description = "Wedding ceremonies and receptions"
+                },
+                new EventType
+                {
+                    EventTypeId = 3,
+                    TypeName = "Concert",
+                    Description = "Live music performances and shows"
+                },
+                new EventType
+                {
+                    EventTypeId = 4,
+                    TypeName = "Birthday",
+                    Description = "Birthday celebrations and parties"
+                },
+                new EventType
+                {
+                    EventTypeId = 5,
+                    TypeName = "Corporate Function",
+                    Description = "Team events, award ceremonies, launches"
+                },
+                new EventType
+                {
+                    EventTypeId = 6,
+                    TypeName = "Exhibition",
+                    Description = "Art shows, trade expos, displays"
+                },
+                new EventType
+                {
+                    EventTypeId = 7,
+                    TypeName = "Workshop",
+                    Description = "Training sessions and interactive workshops"
+                },
+                new EventType
+                {
+                    EventTypeId = 8,
+                    TypeName = "Gala Dinner",
+                    Description = "Formal dinners and fundraising galas"
+                }
+            );
+
+            // Existing keyless view mapping
+            modelBuilder.Entity<BookingDetailViewModel>()
+                .ToView("vw_BookingDetails").HasNoKey();
+
+
+
+           /* modelBuilder.Entity<EventType>().HasData(
             new EventType { EventTypeId = 1, TypeName = "Wedding" },
             new EventType { EventTypeId = 2, TypeName = "Conference" },
             new EventType { EventTypeId = 3, TypeName = "Birthday Party" },
@@ -59,6 +117,8 @@ namespace EventEaseVMS.Data
             modelBuilder.Entity<BookingDetailViewModel>()
                 .ToView("vw_BookingDetails")
                 .HasNoKey();
+           */
+
 
         }
     }

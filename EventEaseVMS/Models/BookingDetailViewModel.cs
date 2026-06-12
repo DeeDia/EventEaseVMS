@@ -17,6 +17,8 @@
         public TimeSpan EndTime { get; set; }
         public int GuestCount { get; set; }
         public string? VenueImageUrl { get; set; }
+
+        public string EventTypeName { get; set; } = string.Empty;
     }
 }
 

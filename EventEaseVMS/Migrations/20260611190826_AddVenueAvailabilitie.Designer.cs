@@ -4,6 +4,7 @@ using EventEaseVMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventEaseVMS.Migrations
 {
     [DbContext(typeof(EventEaseDbContext))]
-    partial class EventEaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260611190826_AddVenueAvailabilitie")]
+    partial class AddVenueAvailabilitie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,50 +162,37 @@ namespace EventEaseVMS.Migrations
                         new
                         {
                             EventTypeId = 1,
-                            Description = "Business conferences and professional summits",
-                            TypeName = "Conference"
-                        },
-                        new
-                        {
-                            EventTypeId = 2,
-                            Description = "Wedding ceremonies and receptions",
                             TypeName = "Wedding"
                         },
                         new
                         {
+                            EventTypeId = 2,
+                            TypeName = "Conference"
+                        },
+                        new
+                        {
                             EventTypeId = 3,
-                            Description = "Live music performances and shows",
-                            TypeName = "Concert"
+                            TypeName = "Birthday Party"
                         },
                         new
                         {
                             EventTypeId = 4,
-                            Description = "Birthday celebrations and parties",
-                            TypeName = "Birthday"
+                            TypeName = "Corporate Event"
                         },
                         new
                         {
                             EventTypeId = 5,
-                            Description = "Team events, award ceremonies, launches",
-                            TypeName = "Corporate Function"
+                            TypeName = "Concert"
                         },
                         new
                         {
                             EventTypeId = 6,
-                            Description = "Art shows, trade expos, displays",
-                            TypeName = "Exhibition"
+                            TypeName = "Graduation"
                         },
                         new
                         {
                             EventTypeId = 7,
-                            Description = "Training sessions and interactive workshops",
-                            TypeName = "Workshop"
-                        },
-                        new
-                        {
-                            EventTypeId = 8,
-                            Description = "Formal dinners and fundraising galas",
-                            TypeName = "Gala Dinner"
+                            TypeName = "Baby Shower"
                         });
                 });
 

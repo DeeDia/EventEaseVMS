@@ -141,5 +141,20 @@ namespace EventEaseVMS.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Index(string search, bool availableOnly = false)
+        {
+            var query = _context.Venues.Include(v => v.Bookings).AsQueryable();
+            if (!string.IsNullOrEmpty(search))
+                query = query.Where(v => v.VenueName.Contains(search) ||
+                                         v.Location.Contains(search));
+            if (availableOnly)
+                query = query.Where(v => v.IsAvailable && v.IsActive);
+            ViewBag.CurrentSearch = search;
+            ViewBag.AvailableOnly = availableOnly;
+            return View(await query.OrderBy(v => v.VenueName).ToListAsync());
+        }
+
+
     }
 }
