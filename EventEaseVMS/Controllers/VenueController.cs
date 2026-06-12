@@ -1,5 +1,4 @@
-﻿
-using EventEaseVMS.Data;
+﻿using EventEaseVMS.Data;
 using EventEaseVMS.EEVServices;
 using EventEaseVMS.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +17,8 @@ namespace EventEaseVMS.Controllers
             _blobService = blobService;
         }
 
-        // GET /Venue — list all venues
-        public async Task<IActionResult> Index(string search)
+        // GET /Venue — list all venues with search and availability filter
+        public async Task<IActionResult> Index(string search, bool availableOnly = false)
         {
             var query = _context.Venues
                 .Include(v => v.Bookings)
@@ -30,7 +29,11 @@ namespace EventEaseVMS.Controllers
                     v.VenueName.Contains(search) ||
                     v.Location.Contains(search));
 
+            if (availableOnly)
+                query = query.Where(v => v.IsAvailable && v.IsActive);
+
             ViewBag.CurrentSearch = search;
+            ViewBag.AvailableOnly = availableOnly;
             return View(await query.OrderBy(v => v.VenueName).ToListAsync());
         }
 
@@ -133,7 +136,6 @@ namespace EventEaseVMS.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // Delete image from blob storage if it exists
             if (!string.IsNullOrEmpty(venue.ImageUrl))
                 await _blobService.DeleteImageAsync(venue.ImageUrl);
 
@@ -141,20 +143,5 @@ namespace EventEaseVMS.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        public async Task<IActionResult> Index(string search, bool availableOnly = false)
-        {
-            var query = _context.Venues.Include(v => v.Bookings).AsQueryable();
-            if (!string.IsNullOrEmpty(search))
-                query = query.Where(v => v.VenueName.Contains(search) ||
-                                         v.Location.Contains(search));
-            if (availableOnly)
-                query = query.Where(v => v.IsAvailable && v.IsActive);
-            ViewBag.CurrentSearch = search;
-            ViewBag.AvailableOnly = availableOnly;
-            return View(await query.OrderBy(v => v.VenueName).ToListAsync());
-        }
-
-
     }
 }
